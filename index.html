@@ -60,23 +60,26 @@
 
             .panel {
                 position: absolute;
-                bottom: 0;
+                top: 0;
                 left: 0;
                 right: 0;
-                height: 100vh; // calc(100vh - 80px);
-                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                top: translateY(100vh);
+                bottom: 80px;
+                opacity: 0;
+                height: calc(100vh - 47px);
+                transform: scale(0.8);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                 z-index: 10;
-                border-radius: 20px 20px 0 0;
+                border-radius: 20px;
                 min-height: none;
                 max-height: none;
-                visibility: hidden;
+                pointer-events: none;
             }
 
             .panel:target {
-                transform: translateY(0vh);
+                opacity: 1;
+                transform: scale(1);
                 z-index: 20;
-                visibility: visible;
+                pointer-events: all;
             }
 
             .tab-bar {
@@ -126,21 +129,6 @@
                 background: #007bff;
                 border-radius: 0 0 3px 3px;
             }
-
-            .close-overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: calc(100vh - 80px);
-                background: rgba(0,0,0,0.3);
-                z-index: 5;
-            }
-
-            .panel:target ~ .close-overlay {
-                display: block;
-            }
         }
     </style>
 </head>
@@ -155,14 +143,13 @@
         <div class="panel" id="tab3">
             <iframe src="https://kirjasto.salo.fyi" title="Kirjasto"></iframe>
         </div>
-        <div class="close-overlay"></div>
     </div>
 
     <div class="tab-bar">
         <a href="#tab1" class="tab-btn">🌤️ Sää</a>
         <a href="#tab2" class="tab-btn">🏊 Uimahalli</a>
         <a href="#tab3" class="tab-btn">📚 Kirjasto</a>
-        <a href="#" class="tab-btn">✕</a>
+        <a href="#" class="tab-btn" style="max-width: 64px">✕</a>
     </div>
 
     <script>
