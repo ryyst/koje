@@ -19,18 +19,21 @@
 
         .container {
             display: flex;
+            flex-wrap: wrap;
             height: 100vh;
             gap: 10px;
             padding: 10px;
         }
 
         .panel {
-            flex: 1;
+            flex: 1 1 500px;
             border: 2px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
             background-color: white;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            min-height: 600px;
+            max-height: 780px;
         }
 
         .panel iframe {
