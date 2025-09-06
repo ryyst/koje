@@ -14,7 +14,7 @@
         body {
             font-family: Arial, sans-serif;
             height: 100vh;
-            background-color: #f5f5f5;
+            background-color: #595959;
         }
 
         .container {
@@ -75,7 +75,7 @@
                 pointer-events: none;
             }
 
-            .panel:target {
+            .panel.active {
                 opacity: 1;
                 transform: scale(1);
                 z-index: 20;
@@ -137,44 +137,74 @@
 </head>
 <body>
     <div class="container">
-        <div class="panel" id="tab1" style="opacity: 1; transform: scale(1); z-index: 20; pointer-events: all;">
+        <div class="panel" id="saa">
             <iframe src="https://ryyst.github.io/sws" title="Sää"></iframe>
         </div>
-        <div class="panel" id="tab2">
+        <div class="panel" id="uimahalli">
             <iframe src="https://uimahalli.salo.fyi" title="Uimahalli"></iframe>
         </div>
-        <div class="panel" id="tab3">
+        <div class="panel" id="kirjasto">
             <iframe src="https://kirjasto.salo.fyi" title="Kirjasto"></iframe>
         </div>
-        <div class="panel" id="tab4">
+        <div class="panel" id="tapahtumat">
             <iframe src="https://tapahtumat.salo.fyi" title="Tapahtumat"></iframe>
         </div>
     </div>
 
     <div class="tab-bar">
-        <a href="#tab1" class="tab-btn active">🌤️ Sää</a>
-        <a href="#tab2" class="tab-btn">🏊 Uimahalli</a>
-        <a href="#tab3" class="tab-btn">📚 Kirjasto</a>
-        <a href="#tab4" class="tab-btn">🎉 Tapahtumat</a>
+        <a href="#saa" class="tab-btn active">🌤️ Sää</a>
+        <a href="#uimahalli" class="tab-btn">🏊 Uimahalli</a>
+        <a href="#kirjasto" class="tab-btn">📚 Kirjasto</a>
+        <a href="#tapahtumat" class="tab-btn">🎉 Tapahtumat</a>
     </div>
 
     <script>
-        // Update active tab state
-        function updateActiveTab() {
-            const hash = window.location.hash;
-            const tabs = document.querySelectorAll('.tab-btn');
+        function showTab(targetId) {
+            // Hide all panels
+            document.querySelectorAll('.panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
 
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-                if (tab.getAttribute('href') === hash && hash !== '#') {
-                    tab.classList.add('active');
+            // Show target panel
+            const targetPanel = document.getElementById(targetId);
+            if (targetPanel) {
+                targetPanel.classList.add('active');
+            }
+
+            // Update tab button states
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('href') === '#' + targetId) {
+                    btn.classList.add('active');
                 }
             });
         }
 
-        // Listen for hash changes
-        window.addEventListener('hashchange', updateActiveTab);
-        window.addEventListener('load', updateActiveTab);
+        // Handle tab clicks
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const targetId = btn.getAttribute('href').substring(1);
+                showTab(targetId);
+            });
+        });
+
+        // Show weather tab by default or handle existing hash
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                showTab(hash);
+            } else {
+                showTab('saa');
+            }
+        });
+
+        // Handle browser back/forward
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                showTab(hash);
+            }
+        });
     </script>
 </body>
 </html>
