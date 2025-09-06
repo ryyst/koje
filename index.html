@@ -134,7 +134,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="panel" id="tab1">
+        <div class="panel" id="tab1" style="opacity: 1; transform: scale(1); z-index: 20; pointer-events: all;">
             <iframe src="https://ryyst.github.io/sws" title="Sää"></iframe>
         </div>
         <div class="panel" id="tab2">
@@ -149,11 +149,10 @@
     </div>
 
     <div class="tab-bar">
-        <a href="#tab1" class="tab-btn">🌤️ Sää</a>
+        <a href="#tab1" class="tab-btn active">🌤️ Sää</a>
         <a href="#tab2" class="tab-btn">🏊 Uimahalli</a>
         <a href="#tab3" class="tab-btn">📚 Kirjasto</a>
         <a href="#tab4" class="tab-btn">🎉 Tapahtumat</a>
-        <a href="#" class="tab-btn" style="max-width: 64px">✕</a>
     </div>
 
     <script>
