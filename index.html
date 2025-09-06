@@ -14,13 +14,16 @@
         body {
             font-family: Arial, sans-serif;
             height: 100vh;
+            height: 100dvh; /* Dynamic viewport height for mobile */
             background-color: #595959;
+            overscroll-behavior: none; /* Disable pull-to-refresh */
         }
 
         .container {
             display: flex;
             flex-wrap: wrap;
             height: 100vh;
+            height: 100dvh; /* Dynamic viewport height for mobile */
             gap: 10px;
             padding: 10px;
         }
@@ -54,6 +57,7 @@
             .container {
                 position: relative;
                 height: 100vh;
+                height: 100dvh; /* Dynamic viewport height for mobile */
                 padding: 0;
                 gap: 0;
             }
@@ -66,6 +70,7 @@
                 bottom: 80px;
                 opacity: 0;
                 height: calc(100vh - 47px);
+                height: calc(100dvh - 47px); /* Dynamic viewport height for mobile */
                 transform: scale(0.8);
                 transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                 z-index: 10;
