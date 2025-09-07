@@ -1,36 +1,49 @@
-const CACHE_NAME = 'salo-v1757242938';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json'
-];
-console.log("Version SW:", CACHE_NAME)
-
+const CACHE_NAME = 'salo-v1757244883';
+const urlsToCache = ["/", "/index.html", "/manifest.json"];
 
 // Install event - cache resources
-self.addEventListener('install', (event) => {
+self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(urlsToCache);
+    }),
   );
 });
 
-// Fetch event - serve from cache when offline
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Return cached version or fetch from network
-        return response || fetch(event.request);
-      }
-    )
-  );
+// Fetch event - network-first for HTML, cache-first for assets
+self.addEventListener("fetch", (event) => {
+  console.log("Version SW:", CACHE_NAME);
+
+  // Network-first for HTML and manifest
+  if (
+    event.request.url.endsWith("/") ||
+    event.request.url.endsWith(".html") ||
+    event.request.url.endsWith("manifest.json")
+  ) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          // Cache the fresh response
+          const responseClone = response.clone();
+          caches
+            .open(CACHE_NAME)
+            .then((cache) => cache.put(event.request, responseClone));
+          return response;
+        })
+        .catch(() => caches.match(event.request)), // Fallback to cache if offline
+    );
+  } else {
+    // Cache-first for other resources
+    event.respondWith(
+      caches
+        .match(event.request)
+        .then((response) => response || fetch(event.request)),
+    );
+  }
 });
 
 // Activate event - clean up old caches
-self.addEventListener('activate', (event) => {
+self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -38,8 +51,8 @@ self.addEventListener('activate', (event) => {
           if (cacheName !== CACHE_NAME) {
             return caches.delete(cacheName);
           }
-        })
+        }),
       );
-    })
+    }),
   );
 });

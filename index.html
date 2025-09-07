@@ -183,7 +183,8 @@
     </div>
 
     <script>
-        console.log('Version: 1757242938'); // auto-update
+        const VERSION = "1757244883"
+        console.log('Version:', VERSION);
 
         function showTab(targetId) {
             // Hide all panels
@@ -235,9 +236,9 @@
         // Register service worker for PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
+                navigator.serviceWorker.register(`/sw.js?v=${VERSION}`)
                     .then((registration) => {
-                        console.log('SW registered: ', registration);
+                        console.log('SW registered.');
 
                         // Force update check and immediate activation
                         registration.addEventListener('updatefound', () => {
@@ -245,7 +246,8 @@
                             newWorker.addEventListener('statechange', () => {
                                 if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                                     // New SW is available, reload to activate it
-                                    window.location.reload();
+                                    console.log('New SW available - would reload but disabled for now');
+                                    // window.location.reload();
                                 }
                             });
                         });
