@@ -1,4 +1,4 @@
-const CACHE_NAME = 'salo-dashboard-v1';
+const CACHE_NAME = 'salo-v1757242227';
 const urlsToCache = [
   '/',
   '/index.html',
