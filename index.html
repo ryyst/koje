@@ -183,7 +183,7 @@
     </div>
 
     <script>
-        const VERSION = "1757277112"
+        const VERSION = "1757277299"
         console.log('Version:', VERSION);
 
         function showTab(targetId) {
@@ -207,14 +207,6 @@
             });
         }
 
-        // Handle tab clicks
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const targetId = btn.getAttribute('href').substring(1);
-                showTab(targetId);
-            });
-        });
-
         // Show weather tab by default or handle existing hash
         window.addEventListener('load', () => {
             const hash = window.location.hash.substring(1);
@@ -225,7 +217,7 @@
             }
         });
 
-        // Handle browser back/forward
+        // Handle button clicks & browser back/forward
         window.addEventListener('hashchange', () => {
             const hash = window.location.hash.substring(1);
             if (hash && document.getElementById(hash)) {
