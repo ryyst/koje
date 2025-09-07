@@ -1,9 +1,11 @@
-const CACHE_NAME = 'salo-v1757242227';
+const CACHE_NAME = 'salo-v1757242938';
 const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json'
 ];
+console.log("Version SW:", CACHE_NAME)
+
 
 // Install event - cache resources
 self.addEventListener('install', (event) => {
