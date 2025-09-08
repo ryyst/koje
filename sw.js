@@ -1,4 +1,4 @@
-const CACHE_NAME = 'salo-v1757277299';
+const CACHE_NAME = 'salo-v1757346483';
 const urlsToCache = ["/", "/index.html", "/manifest.json"];
 
 // Install event - cache resources
